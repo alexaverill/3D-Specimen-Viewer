@@ -17,7 +17,10 @@ public class CMSController : MonoBehaviour {
 	[Header("-----UI Elements -----")]
 	public TouchPointDataEntry touchDataEntryWindow;
 	public Button saveSpecimentBtn;
-	public bool inEditWindow = false;
+	public bool inEditWindow = true;
+	[Header("----- UI Screens -----")]
+	public SummaryScreen summary;
+	public NewSpecimenScreen newSpecimen;
 	void Start () {
 
 		//Mesh myMesh = FastObjImporter.Instance.ImportFile("/home/alex/Unity/SpecimenViewer/Assets/StreamingAssets/test.obj");
@@ -28,8 +31,23 @@ public class CMSController : MonoBehaviour {
 		touchDataEntryWindow.editingFinished += touchEditWindowReturned;
 		touchDataEntryWindow.editingCanceled += touchEditWindowCanceled;
 		touchDataEntryWindow.hideWindow();
+
+		summary.specimenClicked += handleNewButtonClicked;
+		newSpecimen.fileSelected += (e) => inputController.setModel(e);
+		//reset();
+		summary.showWindow();
 	}
 
+    private void handleNewButtonClicked()
+    {
+        summary.hideWindow();
+		newSpecimen.showWindow();
+    }
+
+    private void reset(){
+		newSpecimen.hideWindow();
+		summary.hideWindow();
+	}
     private void saveButtonClicked()
     {
 		specimen.name = "Alex Testing";
@@ -52,12 +70,12 @@ public class CMSController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
-		if(inEditWindow){
-			return;
-		}
+    // void Update () {
+	// 	if(inEditWindow){
+	// 		return;
+	// 	}
 
-	}
+	// }
 	private void editTouchPoint(Vector3 position,GameObject inObj){
 		//inputController.setEditMode(true);
 		//inEditWindow = true;

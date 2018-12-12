@@ -23,7 +23,10 @@ public class InputControllerScript : MonoBehaviour {
 		screenCenter = new Vector2(screenSize.x/2, screenSize.y/2);
 		//createMeshFromFile
 		rotatingObject = new GameObject("Rotating Object");
-		Mesh rotatingMesh = FastObjImporter.Instance.ImportFile(Application.dataPath + "/StreamingAssets/test.obj");
+
+	}
+	public void setModel(string path){
+		Mesh rotatingMesh = FastObjImporter.Instance.ImportFile(path);//Application.dataPath + "/StreamingAssets/test.obj");
 		MeshFilter mf = rotatingObject.AddComponent<MeshFilter>();
 		mf.mesh = rotatingMesh;
 		Material mat = new Material(Shader.Find("Standard"));
