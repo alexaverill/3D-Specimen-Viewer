@@ -1,3 +1,7 @@
-Basic SpecimenViewer that will show pop ups of information based on what is touched/clicked
+# Specimen Viewer 
+Basic 3D Specimen Viewer that will allow for end users to import 3D Models, and add points of interest with a title, description and possibly media.
 
-Also planning to create a specimenviewer creator that will allow for arbitrary placement of data points
+## Current Status:
+ Currently the CMS is in a basic working order, todo's include displaying all currently stored items to edit, add in media integration, 
+ 
+ The Specimen Viewer Application is not currently built
