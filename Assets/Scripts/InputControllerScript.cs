@@ -8,7 +8,7 @@ public class InputControllerScript : MonoBehaviour {
 	public event Action<Vector3,GameObject> objClicked;
 	public GameObject rotatingObject;
 	// Use this for initialization
-	public bool inEditMode = true;
+	public bool isRotatable = true;
 	public Camera mainCamera;
 	public float rotationSpeed = 10;
 	private Vector2 screenSize;
@@ -26,6 +26,7 @@ public class InputControllerScript : MonoBehaviour {
 
 	}
 	public void setModel(string path){
+		setRotatable(false);
 		Mesh rotatingMesh = FastObjImporter.Instance.ImportFile(path);//Application.dataPath + "/StreamingAssets/test.obj");
 		MeshFilter mf = rotatingObject.AddComponent<MeshFilter>();
 		mf.mesh = rotatingMesh;
@@ -35,12 +36,13 @@ public class InputControllerScript : MonoBehaviour {
 		rotatingObject.AddComponent<MeshCollider>();
 		rotatingObject.transform.position = new Vector3(0,0,0);
 		rotatingObject.tag = "Specimen";
+		
 	}
-	public void setEditMode(bool val){
-		inEditMode = val;
+	public void setRotatable(bool val){
+		isRotatable = val;
 	}
 	void Update () {
-		if(rotatingObject == null || inEditMode){
+		if(rotatingObject == null || !isRotatable){
 			return;
 		}
 

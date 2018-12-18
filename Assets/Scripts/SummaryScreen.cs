@@ -7,9 +7,9 @@ public class SummaryScreen : MonoBehaviour {
 	public Button addNewSpecimenButton;
 	public CanvasGroup thisCanvasGroup;
 	// Use this for initialization
-	public event Action specimenClicked;
+	public event Action newSpecimenClicked;
 	void Start () {
-		addNewSpecimenButton.onClick.AddListener(()=>specimenClicked.Invoke());
+		addNewSpecimenButton.onClick.AddListener(()=>newSpecimenClicked.Invoke());
 		//hideWindow();
 		//load in all current specimens 
 	}

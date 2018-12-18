@@ -11,14 +11,15 @@ public class FileSelection : MonoBehaviour {
 	public TMP_InputField filePathDisplay;
 	
 	public event Action<string> pathSelected;
-	void Start () {
+	public event Action randomAction;
+	void Awake () {
 		selectBtn.onClick.AddListener(selectBtnClicked);
 	}
 
     private void selectBtnClicked()
     {
         var path = StandaloneFileBrowser.OpenFilePanel("Select Model","","",false);
-		Debug.Log(path[0]);
+		filePathDisplay.text = path[0];
 		pathSelected.Invoke(path[0]);
     }
 }
