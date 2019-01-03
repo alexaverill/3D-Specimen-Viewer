@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 public class JSON{
-	public static string filePath = Application.dataPath + "/StreamingAssets/touchPointData.json"; 
+	public static string filePath = Application.dataPath + "/StreamingAssets/specimens.json"; 
 
 	public static List<TouchData> readTouchPoints(){
 		List<TouchData> returnList = new List<TouchData>();
@@ -18,8 +18,16 @@ public class JSON{
 		return true;
 	}
 
-	public static bool writeSpecimen(SpecimenClass specimen){
-		System.IO.File.WriteAllText(filePath,JsonConvert.SerializeObject(specimen));
+	public static bool writeSpecimen(List<SpecimenClass> specimenList){
+		//todo add in file and directory creation
+		System.IO.File.WriteAllText(filePath,JsonConvert.SerializeObject(specimenList));
 		return true;
+	}
+	public static List<SpecimenClass> readSpecimens(){
+		List<SpecimenClass> list = new List<SpecimenClass>();
+		if(System.IO.File.Exists(filePath)){
+			list = JsonConvert.DeserializeObject<List<SpecimenClass>>(System.IO.File.ReadAllText(filePath));
+		}
+		return list;
 	}
 }

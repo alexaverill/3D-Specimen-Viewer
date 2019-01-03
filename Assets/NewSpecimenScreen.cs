@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 public class NewSpecimenScreen : MonoBehaviour {
 	
 	public event Action<SpecimenClass> specimenEditingFinished;
@@ -16,6 +17,8 @@ public class NewSpecimenScreen : MonoBehaviour {
 
 	public Button continueBtn;
 	public CanvasGroup thisCanvasGroup;
+	public CanvasGroup panelCG;
+	public float animationRate = 1f;
 	public FileSelection fileInput;
 	
 	public InputControllerScript inputController;
@@ -75,12 +78,17 @@ public class NewSpecimenScreen : MonoBehaviour {
     }
 
     public void showWindow(){
-		thisCanvasGroup.alpha = 1f;
+		Sequence inSequence = DOTween.Sequence();
+		inSequence.Append(thisCanvasGroup.DOFade(1.0f,animationRate));
+		inSequence.Append(panelCG.transform.DOMoveX(400, animationRate));
+		inSequence.Play();
 		thisCanvasGroup.blocksRaycasts = true;
 		//add in swipe in animation
 	}
 	public void hideWindow(){
-		thisCanvasGroup.alpha = 0f;
+		Sequence outSequence = DOTween.Sequence();
+		outSequence.Append(panelCG.transform.DOMoveX(-700, animationRate));
+		outSequence.Append(thisCanvasGroup.DOFade(0.0f,animationRate));
 		thisCanvasGroup.blocksRaycasts = false;
 		//add in swipe out animation
 	}
