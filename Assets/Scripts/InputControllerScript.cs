@@ -16,6 +16,7 @@ public class InputControllerScript : MonoBehaviour {
 	private bool rotating = true;
 	private Vector3 rotationType = new Vector3(0,1,0);
 	Vector3 mousePressedPosition = new Vector3();
+	Vector2 mousePositionDelta = new  Vector2(0,0);
 	float xDist = 0;
 	float yDist = 0;
 	void Start () {
@@ -50,29 +51,45 @@ public class InputControllerScript : MonoBehaviour {
 			mainCamera.transform.LookAt(rotatingObject.transform);
     		//mainCamera.transform.Translate(Vector3.right * Time.deltaTime);
 			Vector3 rotationVector = new Vector3();
-			if(Input.mousePosition.x < mousePressedPosition.x){
-				rotationVector += Vector3.left;
-				//rotationVector = rotationVector * Vector3.right;
-				//mainCamera.transform.Translate(Vector3.right * Time.deltaTime * rotationSpeed);
-				// xDist = (mousePressedPosition.x - Input.mousePosition.x)/screenSize.x;
-				// mainCamera.transform.Rotate(0,rotationSpeed * xDist, 0);
-			}else{
-				rotationVector += Vector3.right;
-				//mainCamera.transform.Translate(Vector3.left * Time.deltaTime* rotationSpeed);
-				// xDist =  -(Input.mousePosition.x-mousePressedPosition.x)/screenSize.x;
-				// mainCamera.transform.Rotate(0,rotationSpeed * xDist, 0);
-			}
-			if(Input.mousePosition.y < mousePressedPosition.y){
-				rotationVector += Vector3.down;
-				//mainCamera.transform.Translate(Vector3.down * Time.deltaTime* rotationSpeed);
-				// yDist = -(mousePressedPosition.y - Input.mousePosition.y)/screenSize.y;
-				// mainCamera.transform.Rotate(rotationSpeed * yDist,0, 0);
-			}else{
+			Vector2 currDiff = new Vector2(0,0);
+			currDiff.x = Input.mousePosition.x-mousePressedPosition.x;
+			currDiff.y = Input.mousePosition.y-mousePressedPosition.y;
+			if(currDiff.x > mousePositionDelta.x){
 				rotationVector += Vector3.up;
-				//mainCamera.transform.Translate(Vector3.up * Time.deltaTime* rotationSpeed);
-				// yDist =  (Input.mousePosition.y-mousePressedPosition.y)/screenSize.y;
-				// mainCamera.transform.Rotate(rotationSpeed * yDist,0, 0);
 			}
+			if(currDiff.x< mousePositionDelta.x ){
+				rotationVector += Vector3.down;
+			}
+			if(currDiff.y > mousePositionDelta.y){
+				rotationVector += Vector3.left;
+			}
+			if(currDiff.y < mousePositionDelta.y){
+				rotationVector += Vector3.right;
+			}
+			mousePositionDelta = currDiff;
+			// if(Input.mousePosition.x > mousePressedPosition.x){
+			// 	rotationVector += Vector3.left;
+			// 	//rotationVector = rotationVector * Vector3.right;
+			// 	//mainCamera.transform.Translate(Vector3.right * Time.deltaTime * rotationSpeed);
+			// 	// xDist = (mousePressedPosition.x - Input.mousePosition.x)/screenSize.x;
+			// 	// mainCamera.transform.Rotate(0,rotationSpeed * xDist, 0);
+			// }else{
+			// 	rotationVector += Vector3.right;
+			// 	//mainCamera.transform.Translate(Vector3.left * Time.deltaTime* rotationSpeed);
+			// 	// xDist =  -(Input.mousePosition.x-mousePressedPosition.x)/screenSize.x;
+			// 	// mainCamera.transform.Rotate(0,rotationSpeed * xDist, 0);
+			// }
+			// if(Input.mousePosition.y < mousePressedPosition.y){
+			// 	rotationVector += Vector3.down;
+			// 	//mainCamera.transform.Translate(Vector3.down * Time.deltaTime* rotationSpeed);
+			// 	// yDist = -(mousePressedPosition.y - Input.mousePosition.y)/screenSize.y;
+			// 	// mainCamera.transform.Rotate(rotationSpeed * yDist,0, 0);
+			// }else{
+			// 	rotationVector += Vector3.up;
+			// 	//mainCamera.transform.Translate(Vector3.up * Time.deltaTime* rotationSpeed);
+			// 	// yDist =  (Input.mousePosition.y-mousePressedPosition.y)/screenSize.y;
+			// 	// mainCamera.transform.Rotate(rotationSpeed * yDist,0, 0);
+			// }
 			mainCamera.transform.RotateAround(rotatingObject.transform.position,rotationVector, rotationSpeed * Time.deltaTime);
 		}
 		if(Input.GetMouseButtonDown(1)){
